@@ -19,7 +19,8 @@ if (process.env.NODE_ENV.trim() === 'production') {
 }
 
 const allowedOrigins = [
-    "http://localhost:4200"
+    "http://localhost:4200",
+    'http://192.168.0.5:4200'
 ]
 
 // origin: cors 정책
