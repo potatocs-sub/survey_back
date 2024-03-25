@@ -10,11 +10,12 @@ const { Server } = require('socket.io');
 // express 정의
 const app = express();
 const port = process.env.PORT || 3000;
+
 // production, development 
 if (process.env.NODE_ENV.trim() === 'production') {
-    require('dotenv').config({ path: path.join(__dirname, '/env/prod.env') })
+    require('dotenv').config({ path: path.join(__dirname, '/.env/prod.env') })
 } else if (process.env.NODE_ENV.trim() === 'development') {
-    require('dotenv').config({ path: path.join(__dirname, '/env/dev.env') })
+    require('dotenv').config({ path: path.join(__dirname, '/.env/dev.env') })
 }
 
 const allowedOrigins = [
@@ -31,11 +32,13 @@ app.use(cookieParser());
 
 const mongoApp = require('./database/mongoDB');
 
+app.use('/api/v1', require('./routers/api/v1'));
+
 const server = http.createServer(app).listen(port, '0.0.0.0', () => {
-    cconsole.log(`app listening on port ${port}`);
+    console.log(`app listening on port ${port}`);
     mongoApp.appSetObjectId(app);
 })
 
-app.use('/api/v1', require('./routers/api/v1'));
+
 
 
