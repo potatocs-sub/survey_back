@@ -40,7 +40,7 @@ exports.getSurveys = async (req, res) => {
 
     const dbModels = global.DB_MODELS;
     try {
-        const surveys = await dbModels.Survey.find();
+        const surveys = await dbModels.Survey.find().select({ title: 1, description: 1 });
         console.log(surveys);
         res.status(200).json(surveys);
     } catch (err) {
