@@ -66,7 +66,7 @@ exports.getSurvey = async (req, res) => {
         `)
 
     const dbModels = global.DB_MODELS;
-    const _id = req.query._id;
+    const _id = req.params._id;
     try {
         const survey = await dbModels.Survey.findOne({ _id })
 
