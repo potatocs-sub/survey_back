@@ -1,3 +1,29 @@
+
+exports.survey = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : 
+  API  : survey
+  router.post('/survey/:_id', surveyController.survey);
+--------------------------------------------------
+    `)
+
+    const dbModels = global.DB_MODELS;
+    const body = req.body;
+    const _id = req.params._id;
+
+    try {
+        await dbModels.Survey_Result({ survey_id: _id, result: body }).save();
+        res.status(200).json({ status: true })
+    } catch (err) {
+        console.log('[ERROR]', err);
+        res.status(500).send({
+            message: "An error occured while survey"
+        })
+    }
+}
+
+
 /**
  * @desciprtion 설문지 등록
  * @param {*} req 

@@ -20,6 +20,7 @@ main().catch((err) => console.log(err));
 function createSchema() {
     const dbModels = {};
     dbModels.Survey = require('../schemas/survey_schema');
+    dbModels.Survey_Result = require('../schemas/survey_result_schema');
 
     global.DB_MODELS = dbModels;
 }
