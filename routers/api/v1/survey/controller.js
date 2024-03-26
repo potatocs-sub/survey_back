@@ -102,9 +102,14 @@ exports.editSurvey = async (req, res) => {
     `)
     const dbModels = global.DB_MODELS;
     const _id = req.params._id;
-    const body = req.body;
+    const { title, description, cards } = req.body;
+
     try {
-        await dbModels.Survey.update({ _id }, body);
+        await dbModels.Survey.updateOne({ _id }, {
+            $set: {
+                title, description, cards
+            }
+        });
         return res.status(200).json({ status: true })
     } catch (err) {
         console.log("[ ERROR ]", err);
