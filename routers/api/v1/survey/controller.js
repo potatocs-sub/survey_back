@@ -86,6 +86,34 @@ exports.deleteSurvey = async (req, res) => {
     }
 }
 
+/**
+ * @description 설문지 수정
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+exports.editSurvey = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : 
+  API  : edit/:_id
+  router.post('/survey/edit/:_id', surveyController.editSurvey);
+--------------------------------------------------
+    `)
+    const dbModels = global.DB_MODELS;
+    const _id = req.params._id;
+    const body = req.body;
+    try {
+        await dbModels.Survey.update({ _id }, body);
+        return res.status(200).json({ status: true })
+    } catch (err) {
+        console.log("[ ERROR ]", err);
+        return res.status(500).send({
+            message: "An error occured while getting survey"
+        })
+    }
+}
+
 
 /**
  * @description 설문지 리스트 요청
