@@ -12,9 +12,9 @@ router.get('/:_id', surveyController.getSurvey);
 
 router.get('/result/:_id', surveyController.getSurveyResult);
 // 설문지 수정
-// router.patch('/:_id', )
+router.patch('/:_id', surveyController.editSurvey);
 // 설문 삭제 
-
+router.delete('/:_id', surveyController.deleteSurvey);
 
 
 module.exports = router;

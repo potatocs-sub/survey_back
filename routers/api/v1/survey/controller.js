@@ -74,7 +74,7 @@ exports.deleteSurvey = async (req, res) => {
         await dbModels.Survey_Result.deleteMany({ survey_id: _id });
 
         // 설문지 삭제
-        await dbModels.Survey.delete({ _id })
+        await dbModels.Survey.deleteOne({ _id })
 
         // 성공 응답
         return res.status(200).json({ status: true })
