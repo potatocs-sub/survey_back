@@ -33,7 +33,7 @@ exports.addSurvey = async (req, res) => {
     console.log(`
 --------------------------------------------------
   User : 
-  API  : addSurvey
+  API  : add
   router.post('/survey/add', surveyController.addSurvey);
 --------------------------------------------------
     `)
@@ -50,6 +50,43 @@ exports.addSurvey = async (req, res) => {
         })
     }
 }
+
+
+/**
+ * @description 설문지 삭제
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+exports.deleteSurvey = async (req, res) => {
+    console.log(`
+--------------------------------------------------
+  User : 
+  API  : delete/:_id
+  router.post('/survey/delete/:_id', surveyController.deleteSurvey);
+--------------------------------------------------
+    `)
+
+    const dbModels = global.DB_MODELS;
+    const _id = req.params._id;
+    try {
+        // 응답 기록 삭제
+        await dbModels.Survey_Result.deleteMany({ survey_id: _id });
+
+        // 설문지 삭제
+        await dbModels.Survey.delete({ _id })
+
+        // 성공 응답
+        return res.status(200).json({ status: true })
+    } catch (err) {
+        console.log("[ ERROR ]", err);
+        return res.status(500).send({
+            message: "An error occured while getting survey"
+        })
+    }
+}
+
+
 /**
  * @description 설문지 리스트 요청
  * @param {*} req 
@@ -71,11 +108,12 @@ exports.getSurveys = async (req, res) => {
         res.status(200).json(surveys);
     } catch (err) {
         console.log("[ ERROR ]", err);
-        res.status(500).send({
+        return res.status(500).send({
             message: "An error occured while getting survey"
         })
     }
 }
+
 
 /**
  * @description 설문지 정보 요청
@@ -101,6 +139,30 @@ exports.getSurvey = async (req, res) => {
         console.log("[ ERROR ]", err);
         res.status(500).send({
             message: "An error occured while getting survey"
+        })
+    }
+}
+
+
+exports.getSurveyResult = async (req, res) => {
+    console.log(`
+    --------------------------------------------------
+      User : 
+      API  : getSurveyResult
+      router.get('/surveyResult/:_id', surveyController.getSurveyResult);
+    --------------------------------------------------
+        `)
+
+    const dbModels = global.DB_MODELS;
+    const _id = req.params._id;
+
+    try {
+        const results = await dbModels.Survey_Result.find({ survey_id: _id })
+        return res.status(200).json(results)
+    } catch (err) {
+        console.log("[ ERROR ]", err);
+        return res.status(500).send({
+            message: "An error occured while getting survey result"
         })
     }
 }
